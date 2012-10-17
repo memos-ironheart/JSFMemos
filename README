@@ -1,0 +1,93 @@
+JSFMemos JavaScript framework
+
+Like any other JavaScript framework, one of its main targets is to make the 
+life of the web developers and designers easier to produce very attractive and 
+functional websites.
+
+To do:
+
+	To make use of prototypes.
+	To implement more features. High priorities ... more animation effects, 2D,
+	WebGL, Audio Layer ...
+	To keep it as small as possible.
+
+How to use:
+
+	Just load the `load.js` script as usual and after load your scripts.
+	The startup script must be like this:
+
+
+	// here the libraries you want to be loaded before executing your scripts
+	//             |
+	memos.onReady(null,function(){
+		// here put your code
+	});
+	// you can write code after the onReady safely.
+	//
+	// and some examples
+	memos.putEl(
+			memos.createEl('div',{id:'hello',width:'200px',height:'200px'}),
+				memos.getEl('head,body'));
+	memos.putEl(
+			memos.createEl('div',{style:'background-color:#00FF00',id:'beforehello',width:'200px',height:'200px'}),
+				memos.getEl('head,body'),
+					memos.getEl('head,body,#hello'),1); // 1 means before
+	memos.usinglib('memos.animation');
+	// you have to wait here till the `usinglib` is fully implemented
+	// because it loads asychronously and the lib is not available right after `usinglib`
+	// the only solution for now is to check whether the `memos.__pLibs` is zero in a time loop.
+	memos.animation_scheduler.start();
+	function onend_remove(){
+		memos.getEl('html,body,#beforehello').parentNode.removeChild(memos.getEl('html,body,#beforehello'));
+	}
+	memos.animation.setOn(memos.getEl('html,body,#beforehello'),{height:{start:200,end:0,unit:'px'}},1000,null,null,onend_remove);
+
+Features:
+
+	Asynchronous loader:
+		When you are in need to load scripts at runtime
+		is simple as this:
+
+			memos.uselib('mylib'); // not fully implemented yet
+
+		or in your startup script like this
+
+			memos.onReady('mylib',function(){
+				// your code here ...
+			});
+
+		... tested only with GoogleChrome, Opera, Firefox, Iceweasel, Evolution.
+
+
+	The memos.setInterval:
+		Is my solution on browser hungs which uses the `setTimeout`
+		and has the same functionality as the `setInterval` function.
+		Therefore i need some feedback on how exactly works with browsers
+		other than GoogleChrome, Firefox, Opera and Iceweasel.
+
+	Scheduler and Animation scheduler:
+		An internal scheduler on which you can set the frequency for the
+		cycles per second and uses the `memos.setInterval`. You can add and
+		remove jobs like this:
+
+			function test() {
+				console.log('tick')
+			}
+			var sId = memos.sched_add(test,100);
+
+			// after some other work
+
+			memos.sched_rm(sId);
+
+		The animation scheduler is a dependency of the `memos.animation`
+		with name `memos.animation_scheduler` and has 30 frames per second as
+		default value. Has the same functionality as the main scheduler but
+		it doesn't work with jobs like previously and you have to store the
+		Node which has to be animated instead of a callback function and runs
+		the `Node.animation.nextStep` function.
+
+	Query system (not fully implemented yet)
+		A solution to the `querySelector` function which is not supported on
+		all browsers.
+
+	... to implement many more features
