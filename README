@@ -26,12 +26,16 @@ How to use:
 	//
 	// and some examples
 	memos.putEl(
-			memos.createEl('div',{id:'hello',width:'200px',height:'200px'}),
-				memos.getEl('head,body'));
+		memos.createEl('div',{id:'hello',width:'200px',height:'200px'}),
+			memos.getEl('head,body'));
 	memos.putEl(
-			memos.createEl('div',{style:'background-color:#00FF00',id:'beforehello',width:'200px',height:'200px'}),
-				memos.getEl('head,body'),
-					memos.getEl('head,body,#hello'),1); // 1 means before
+		memos.createEl('div',
+			{style:'background-color:#00FF00',
+			 id:'beforehello',
+			 width:'200px',
+			 height:'200px'}),
+			memos.getEl('head,body'),
+				memos.getEl('head,body,#hello'),1); // 1 means before
 	memos.usinglib('memos.animation');
 	// you have to wait here till the `usinglib` is fully implemented
 	// because it loads asychronously and the lib is not available right after `usinglib`
@@ -40,7 +44,9 @@ How to use:
 	function onend_remove(){
 		memos.getEl('html,body,#beforehello').parentNode.removeChild(memos.getEl('html,body,#beforehello'));
 	}
-	memos.animation.setOn(memos.getEl('html,body,#beforehello'),{height:{start:200,end:0,unit:'px'}},1000,null,null,onend_remove);
+	memos.animation.setOn(memos.getEl('html,body,#beforehello'),
+		{height:{start:200,end:0,unit:'px'}},
+			1000,null,null,onend_remove);
 
 Features:
 

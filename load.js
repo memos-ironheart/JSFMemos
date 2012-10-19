@@ -4,7 +4,7 @@
 var memos = {
 	config: {
 		glshaderspath: '/data/glshaders',
-		libpath: '/js',
+		libpath: '/common/scripts',
 		async_enabled:true,
 		ready_delay:1,
 		sched_interval:10
@@ -201,6 +201,7 @@ var memos = {
 	__idRegEx:/^#[a-zA-Z0-9-_:]+(@[0-9]+)?$/,
 	__exidpRegEx:/^#/,
 	__extposRegEx:/^@[0-9]+$/,
+	__has
 	getEl: function(reqStr, __pEl, __caA) { // XXX: INCOMPLETE!
 		if (!this.isStr(reqStr)) return null;
 		if (typeof this.elCache[reqStr] !== 'undefined') return this.elCache[reqStr];
@@ -215,13 +216,11 @@ var memos = {
 				if (__pEl.childNodes[childi].tagName.match(req[0].replace(this.__extposRegEx,''))) {
 					if (!chi) {
 						if (req.length > 1) {
-							if (prx) __caA.push(req.shift()+'@'+prx);
-							else __caA.push(req.shift());
+							__caA.push(req.shift());
 							this.elCache[__caA.toString()] = __pEl.childNodes[childi];
 							return this.getEl(req.toString(), this.elCache[__caA.toString()], __caA)
 						} else {
-							if (prx) __caA.push(req.shift()+'@'+prx);
-							else __caA.push(req.shift());
+							__caA.push(req.shift());
 							this.elCache[__caA.toString()] = __pEl.childNodes[childi];
 							return this.elCache[__caA.toString()]
 						}
@@ -231,13 +230,11 @@ var memos = {
 				if (__pEl.childNodes[childi].className.match(req[0].replace(this.__exclspRegEx,'').replace(this.__extposRegEx,''))) {
 					if (!chi) {
 						if (req.length > 1) {
-							if (prx) __caA.push(req.shift()+'@'+prx);
-							else __caA.push(req.shift());
+							__caA.push(req.shift());
 							this.elCache[__caA.toString()] = __pEl.childNodes[childi];
 							return this.getEl(req.toString(), this.elCache[__caA.toString()], __caA)
 						} else {
-							if (prx) __caA.push(req.shift()+'@'+prx);
-							else __caA.push(req.shift());
+							__caA.push(req.shift());
 							this.elCache[__caA.toString()] = __pEl.childNodes[childi];
 							return this.elCache[__caA.toString()]
 						}
@@ -247,13 +244,11 @@ var memos = {
 				if (__pEl.childNodes[childi].id.match(req[0].replace(this.__exidpRegEx,'').replace(this.__extposRegEx,''))) {
 					if (!chi) {
 						if (req.length > 1) {
-							if (prx) __caA.push(req.shift()+'@'+prx);
-							else __caA.push(req.shift());
+							__caA.push(req.shift());
 							this.elCache[__caA.toString()] = __pEl.childNodes[childi];
 							return this.getEl(req.toString(), this.elCache[__caA.toString()], __caA)
 						} else {
-							if (prx) __caA.push(req.shift()+'@'+prx);
-							else __caA.push(req.shift());
+							__caA.push(req.shift());
 							this.elCache[__caA.toString()] = __pEl.childNodes[childi];
 							return this.elCache[__caA.toString()]
 						}
