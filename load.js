@@ -201,7 +201,6 @@ var memos = {
 	__idRegEx:/^#[a-zA-Z0-9-_:]+(@[0-9]+)?$/,
 	__exidpRegEx:/^#/,
 	__extposRegEx:/^@[0-9]+$/,
-	__has
 	getEl: function(reqStr, __pEl, __caA) { // XXX: INCOMPLETE!
 		if (!this.isStr(reqStr)) return null;
 		if (typeof this.elCache[reqStr] !== 'undefined') return this.elCache[reqStr];
@@ -210,7 +209,6 @@ var memos = {
 		if (typeof __caA === 'undefined') __caA = [];
 		var chi = parseInt(req[0].replace(this.__numexRegEx));
 		if (isNaN(chi)) chi = 0;
-		var prx = chi;
 		for (var childi = 0; childi < __pEl.childNodes.length; ++childi) {
 			if (req[0].match(this.__tagRegEx) && typeof __pEl.childNodes[childi].tagName !== 'undefined') {
 				if (__pEl.childNodes[childi].tagName.match(req[0].replace(this.__extposRegEx,''))) {
