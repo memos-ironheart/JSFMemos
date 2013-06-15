@@ -5,11 +5,12 @@ memos.define([],'memos.animation_scheduler', {
 	__intId:null,
 	__cbs:[],
 	__ontick:function(){
-		for(var i = 0;i<memos.animation_scheduler.__cbs.length;++i){
-			++memos.animation_scheduler.__cbs[i][2];
-			if(memos.animation_scheduler.__cbs[i][3]) {memos.animation_scheduler.__cbs.splice(i,1);continue}
-			if(memos.animation_scheduler.__cbs[i][1]==memos.animation_scheduler.__cbs[i][2]) {memos.animation_scheduler.__cbs[i][0].nextStep(i);memos.animation_scheduler.__cbs[i][2] = 0}
-		}
+		memos.animation_scheduler.__cbs.every(function(el,index){
+			++el[2];
+			if(el[3]) {delete memos.animation_scheduler.__cbs[index];memos.animation_scheduler.__cbs.splice(index,1);return false}
+			if(el[1]==el[2]) {el[0].nextStep();el[2] = 0}
+			return true;
+		})
 	},
 	start:function(){
 		if(memos.isNull(this.__intId)) this.__intId = memos.setInterval(this.__ontick,(1000/this.config.fps))

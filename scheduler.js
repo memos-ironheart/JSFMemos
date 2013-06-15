@@ -1,15 +1,16 @@
 memos.define([],'memos.scheduler', {
 	config:{
-		fps:30
+		tps:10
 	},
 	__intid:null,
 	__cbs:[],
 	__ontick:function(){
-		for(var i = 0;i<memos.scheduler.__cbs.length;++i){
-			++memos.scheduler.__cbs[i][2];
-			if(memos.scheduler.__cbs[i][3]) {memos.scheduler.__cbs.splice(i,1);continue}
-			if(memos.scheduler.__cbs[i][1]==memos.scheduler.__cbs[i][2]) {memos.scheduler.__cbs[i][0]();memos.scheduler.__cbs[i][2] = 0}
-		}
+		memos.scheduler.__cbs.every(function(el,index){
+			++el[2];
+			if(el[3]) {delete memos.scheduler.__cbs[index];memos.scheduler.__cbs.splice(index,1);return false}
+			if(el[1]==el[2]) {el[0]();el[2] = 0}
+			return true;
+		})
 	},
 	start:function(){
 		if(memos.isNull(this.__intid)) this.__intid = setInterval(this.__ontick,(1000/this.config.fps))

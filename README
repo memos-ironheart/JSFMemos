@@ -19,8 +19,16 @@ How to use:
 
 	// here the libraries you want to be loaded before executing your scripts
 	//             |
-	memos.onReady(null,function(){
+	memos.onReady(['memos.gl'],function($){
 		// here put your code
+		$.gl.onReady($.putEl($.createEl('canvas',{id:'mainCanvas'}),$.getEl('html,body')),function(gl){
+			gl.enable(gl.DEPTH_TEST);
+			// ...
+		},function($){
+			$.getEl('html,body').removeChild($.getEl('html,body,canvas'));
+			$.putEl($.createEl('div',{id:'mainBox'}),$.getEl('html,body'));
+			$.getEl('html,body,#mainBox').innerHTML = '<h3>No WebGL?!?!</h3>'
+		})
 	});
 	// you can write code after the onReady safely.
 	//
@@ -36,10 +44,6 @@ How to use:
 			 height:'200px'}),
 			memos.getEl('head,body'),
 				memos.getEl('head,body,#hello'),1); // 1 means before
-	memos.usinglib('memos.animation');
-	// you have to wait here till the `usinglib` is fully implemented
-	// because it loads asychronously and the lib is not available right after `usinglib`
-	// the only solution for now is to check whether the `memos.__pLibs` is zero in a time loop.
 	memos.animation_scheduler.start();
 	function onend_remove(){
 		memos.getEl('html,body,#beforehello').parentNode.removeChild(memos.getEl('html,body,#beforehello'));
@@ -51,19 +55,12 @@ How to use:
 Features:
 
 	Asynchronous loader:
-		When you are in need to load scripts at runtime
-		is simple as this:
-
-			memos.uselib('mylib'); // not fully implemented yet
-
-		or in your startup script like this
+		When you are in need to load scripts you can do this only in your
+		start-up file like this
 
 			memos.onReady('mylib',function(){
 				// your code here ...
 			});
-
-		... tested only with GoogleChrome, Opera, Firefox, Iceweasel, Evolution.
-
 
 	The memos.setInterval:
 		Is my solution on browser hungs which uses the `setTimeout`
@@ -86,7 +83,7 @@ Features:
 			memos.sched_rm(sId);
 
 		The animation scheduler is a dependency of the `memos.animation`
-		with name `memos.animation_scheduler` and has 30 frames per second as
+		with name `memos.animation_scheduler` on 30 frames per second as
 		default value. Has the same functionality as the main scheduler but
 		it doesn't work with jobs like previously and you have to store the
 		Node which has to be animated instead of a callback function and runs
